@@ -1,0 +1,228 @@
+{% extends "_layouts/base.html" %}
+{% block content %}
+    <div class="content">
+            <div class="row" style="min-height: 80vh">
+                <!-- /# column -->
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="pull-left" style="width: 50%">{% if post %}Editar{% else %}Novo{% endif %} Anúncio</h4>
+                            <span style="width: 50%;{% if not post %}opacity: 0{% endif %}" class="pull-right text-right">ID: {{ post.id }}</span>
+                        </div>
+                        <div class="card-body">
+                                <form method="post">
+                                    {% csrf_token %}
+                                    {% if not seller.is_verified %}
+                                    <div class="alert alert-danger" role="alert">
+                                        Por favor, verifique a sua conta para publicar o anúncio.
+                                        <a href="/dashboard/profile/">aqui</a>
+                                    </div>
+                                    {% endif %}
+                                    {% if message %}
+                                    <div class="alert alert-info" role="alert">
+                                        {{ message }}
+                                    </div>
+                                    {% endif %}
+                                    {% if not post %}
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <div class="images">
+                                                <div class="pic">
+                                                  Foto
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% else %}
+                                    <input type="hidden" value="{{ post.id }}" id="post">
+                                    {% endif %}
+                                    <div class="form-row">
+                                        <div class="form-group col-md-9">
+                                            <input class="form-control" maxlength="70" placeholder="Título do anúncio*" name="title" id="title" value="{{ post.title }}">
+                                            <small class="form-text text-muted">ex: Samsung Note 9 Novo</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group col-md-5">
+                                            <select data-placeholder="Categoria..." class="form-control" name="category" id="category">
+                                                <option selected disabled value="" label="Categoria"></option>
+                                                {% for category in categories %}
+                                                <option value="{{ category.id }}" {% if category.id == post.category.id %}selected{% endif %}>{{ category.name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group col-md-4">
+                                            <input class="form-control money" placeholder="Preço*" name="price" id="price" value="{{ post.price }}">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group col-md-8">
+                                            <textarea placeholder="Descrição" name="description" maxlength="9000" class="form-control input-limit" id="description" style="height: 140px; resize: none; overflow-y: hidden;" cols="80" rows="1">{{ post.description }}</textarea>
+                                            <small class="form-text text-muted">Max. 9000 Caracteres</small>
+                                        </div>
+                                    </div>
+
+                                     <input type="hidden" id="photo1" name="photo1">
+                                     <input type="hidden" id="photo2" name="photo2">
+                                     <input type="hidden" id="photo3" name="photo3">
+                                  {% if seller.is_verified %}
+                                  <button type="button" class="btn btn-primary" id="send">{% if post %}Salvar{% else %}Publicar{% endif %}</button>
+                                  {% else %}
+                                  <button type="button" disabled class="btn btn-primary disabled">Publicar</button>
+                                  {% endif %}
+                                </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- /# column -->
+            </div><!-- .content -->
+    </div>
+    <div class="clearfix"></div>
+    <div class="modal fade" id="cropImagePop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel"></h4>
+            </div>
+            <div class="modal-body">
+                <div id="upload-demo" class="center-block"></div>
+                {% csrf_token %}
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="cropImageBtn" class="btn btn-success">Cortar</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script src="/dashboard/static/dashboard/assets/js/lib/chosen/chosen.jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.4/croppie.min.js"></script>
+<script>
+    (function ($) {
+      $(document).ready(function () {
+        var rawImg = '';
+        var $uploadCrop, tempFilename, imageId;
+        var images = $('.images')
+
+        uploadImage()
+        submit()
+
+        var ID
+        var way = 0
+        var queue = []
+        var fullStock = 10
+        var speedCloseNoti = 1000
+        var selectedImages = 0
+
+        $uploadCrop = $('#upload-demo').croppie({
+			viewport: {
+				width: 200,
+				height: 200,
+			},
+			enforceBoundary: false,
+			enableExif: true
+		});
+
+		$('#cropImagePop').on('shown.bs.modal', function(){
+			// alert('Shown pop');
+		    $uploadCrop.croppie('bind', {
+			    url: rawImg
+			}).then(function(){
+			    console.log('jQuery bind complete');
+			});
+		});
+
+        function uploadImage() {
+          var button = $('.images .pic')
+          var uploader = $('<input type="file" accept="image/*" />')
+
+          button.on('click', function () {
+            uploader.click()
+          })
+
+          uploader.on('change', function () {
+              var reader = new FileReader()
+              reader.onload = function(event) {
+                $('.upload-demo').addClass('ready');
+				$('#cropImagePop').modal('show');
+				rawImg = event.target.result;
+              }
+              reader.readAsDataURL(uploader[0].files[0])
+           })
+
+           $('#cropImageBtn').on('click', function (ev) {
+		        $uploadCrop.croppie('result', {
+				    type: 'base64',
+					format: 'jpeg',
+					size: {width: 600, height: 600}
+				}).then(function (resp) {
+				    images.prepend('<div class="img" style="background-image: url(\'' + resp + '\');" rel="'+ resp  +'"><span>remove</span></div>')
+                    selectedImages = selectedImages + 1
+                    if(selectedImages == 3) button.hide();
+                    $('#cropImagePop').modal('hide');
+			    });
+			});
+
+          images.on('click', '.img', function () {
+            $(this).remove()
+            button.show();
+            selectedImages = selectedImages - 1
+          })
+
+        }
+
+        function submit() {
+          var button = $('#send')
+
+          button.on('click', function () {
+            var images = $('.images .img')
+
+            if ($('#title').val().length < 10) {
+                alert('O título deve ter no mínimo 10 letras!')
+                return false;
+            }
+
+            if ($('#price').val().length < 3) {
+                alert('Digite um preço válido!')
+                return false;
+            }
+
+            if ($('#description').val().length < 20) {
+                alert('A descrição deve ter no mínimo 20 letras!')
+                return false;
+            }
+
+            if ($('#post').val() == undefined){
+
+                if (images.length > 0){
+
+                    try {
+                      $('#photo1').val($(images[0]).attr('rel'))
+                      $('#photo2').val($(images[1]).attr('rel'))
+                      $('#photo3').val($(images[2]).attr('rel'))
+                    }
+                    catch(err) {}
+
+
+                 }else{
+                    alert('Por favor, selecione as fotos!')
+                    return false;
+                 }
+            }
+
+             $('#price').val($('#price').val().replace(" ", ""));
+
+             $('form').submit()
+          })
+        }
+  })
+})(jQuery)
+</script>
+{% endblock %}

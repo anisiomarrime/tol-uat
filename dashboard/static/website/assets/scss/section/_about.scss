@@ -1,0 +1,237 @@
+/* 10. about page css here */
+
+.about_content{
+    text-align: center;
+    & h1{
+        display: inline-block;
+        font-size: 24px;
+        line-height: 24px;
+        text-transform: capitalize;
+        font-weight: 500;
+        margin-bottom: 19px;
+         @media #{$desktop-device}{
+            font-size: 22px;
+        }
+        @media #{$tablet-device}{
+           font-size: 18px;
+            margin-bottom: 14px;
+        }
+        @media #{$large-mobile}{
+            font-size: 17px;
+            line-height: 25px;
+            margin-bottom: 13px;
+        }
+    }
+    & p{
+        font-size: 14px;
+        line-height: 26px;
+        max-width: 890px;
+        margin: 0 auto;
+    }
+}
+.about_thumb{
+    margin-bottom: 26px;
+    @media #{$tablet-device}{
+       margin-bottom: 21px;
+    }
+    @media #{$large-mobile}{
+        margin-bottom: 20px;
+    }
+}
+
+
+.chose_content{
+    & h3{
+        font-size: 18px;
+        text-transform: capitalize;
+        font-weight: 500;
+        line-height: 24px;
+        margin-bottom: 19px;
+        @media #{$tablet-device}{
+            font-size: 16px;
+           argin-bottom: 13px;
+        }
+        @media #{$large-mobile}{
+            font-size: 16px;
+            line-height: 20px;
+            margin-bottom: 11px;
+        }
+    }
+}
+.about_signature {
+	margin-top: 25px;
+    @media #{$tablet-device}{
+       margin-top: 20px;
+    }
+    @media #{$large-mobile}{
+       margin-top: 20px;
+    }
+    & img{
+        @media #{$large-mobile}{
+           width: 120px;
+        }
+    }
+}
+.choseus_area{
+    margin-bottom: 50px;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-position: center center;
+    background-size: cover; 
+    padding: 100px 0 96px;
+    @media #{$tablet-device}{
+       padding: 50px 0 45px;
+    }
+    @media #{$large-mobile}{
+        padding: 50px 0 15px;
+    }
+}
+.single_chose {
+	text-align: center;
+    @media #{$large-mobile}{
+        margin-bottom: 25px;
+    }
+    &:hover{
+        & .chose_icone{
+            transform: rotatey(180deg);
+        }
+    }
+}
+.chose_icone {
+	margin-bottom: 23px;
+    @include transition(.5s);
+    @media #{$tablet-device}{
+       margin-bottom: 20px;
+    }
+    @media #{$large-mobile}{
+        margin-bottom: 14px;
+    }
+}
+
+.single_gallery_section{
+    @media #{$large-mobile}{
+        margin-bottom: 25px;
+    }
+}
+.about_gallery_section {
+    @media #{$large-mobile}{
+        margin-bottom: 18px;
+    }
+}
+.gallery_thumb {
+	margin-bottom: 20px;
+    @media #{$large-mobile}{
+        margin-bottom: 15px;
+    }
+    & img{
+        @media #{$large-mobile}{
+            width: 100%;
+        }
+    }
+}
+.about_gallery_content{;
+    & h3{
+        font-size: 18px;
+        text-transform: capitalize;
+        font-weight: 500;
+        line-height: 24px;
+        margin-bottom: 12px;
+        @media #{$large-mobile}{
+            font-size: 16px;
+            margin-bottom: 7px;
+        }
+    }
+    & p{
+        line-height: 26px;
+    }
+}
+
+.team_container{
+    padding-bottom: 45px;
+    border-bottom: 1px solid $grey_color;
+     @media #{$tablet-device}{
+       padding-bottom: 15px;
+    }
+    @media #{$large-mobile}{
+       padding-bottom: 15px;
+    }
+}
+.team_member {
+	text-align: center;
+    @media #{$tablet-device}{
+       margin-bottom: 28px;
+    }
+    @media #{$large-mobile}{
+       margin-bottom: 28px;
+    }
+}
+.team_thumb {
+	margin-bottom: 24px;
+    @media #{$tablet-device}{
+       margin-bottom: 18px;
+    }
+    @media #{$large-mobile}{
+       margin-bottom: 18px;
+    }
+}
+.team_content{
+    & h3{
+        font-size: 18px;
+        line-height: 24px;
+        font-weight: 500;
+        margin-bottom: 5px;
+        @media #{$tablet-device}{
+            line-height: 18px;
+            margin-bottom: 4px;
+        }
+        @media #{$large-mobile}{
+            line-height: 18px;
+            margin-bottom: 4px;
+            font-size: 17px;
+        }
+    }
+    & h5{
+        font-size: 13px;
+        line-height: 17px;
+        margin-bottom: 12px;
+        padding-bottom: 14px;
+        position: relative;
+        display: inline-block;
+        @media #{$tablet-device}{
+            margin-bottom: 11px;
+            padding-bottom: 11px;
+        }
+        @media #{$large-mobile}{
+            margin-bottom: 11px;
+            padding-bottom: 11px;
+        }
+        &::before{
+            position: absolute;
+            content: "";
+            width: 37px;
+            height: 2px;
+            background: $secondary_color;
+            bottom: 0;
+            left: 50%;
+            transform: translatex(-50%);
+        }
+    }
+    & p{
+        font-size: 14px;
+        line-height: 25px;
+        & a{
+            &:hover{
+                color: $secondary_color;
+            }
+        }
+    }
+}
+
+/*about page css end*/
+
+
+
+
+
+
+

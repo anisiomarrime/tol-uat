@@ -1,0 +1,62 @@
+{% extends "_layouts/base.html" %}
+
+{% block content %}
+    <div class="content">
+            <div class="animated fadeIn">
+                <div class="row" style="min-height: 80vh">
+
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <strong class="card-title">Pedidos de Upgrade</strong>
+                            </div>
+                            <div class="card-body">
+                                <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>#ID</th>
+                                            <th>Vendedor</th>
+                                            <th>Contacto</th>
+                                            <th>Criado em</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for rq in requests %}
+                                        <tr>
+                                            <td>{{ rq.id }}</td>
+                                            <td>{{ rq.seller.user.first_name }} {{ rq.seller.user.last_name }}</td>
+                                            <td>{{ rq.seller.mobile }}</td>
+                                            <td>{{ rq.created_at }}</td>
+                                            <td class="status">
+                                            {% if rq.status == 1 %}
+                                                ATTENDED
+                                                {% else %}
+                                                    PENDING
+                                            {% endif %}
+                                            </td>
+                                            <!--td class="buttons text-center">
+                                                <button type="button" class="btn btn-success" title="Aprovar" id="btn-approve" data-id="{{ payment.id }}"><i class="fa fa-check"></i></button>
+                                            </td-->
+                                        </tr>
+                                        {% endfor %}
+                                        {% if not requests %}
+                                            <tr>
+                                                <td colspan="5">Nenhum pedido recebido.</td>
+                                            </tr>
+                                        {% endif %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- .animated -->
+        </div><!-- .content -->
+
+    <div class="clearfix"></div>
+{% endblock %}
+
+{% block js %}
+
+{% endblock %}

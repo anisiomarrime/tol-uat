@@ -1,0 +1,331 @@
+{% extends "_layouts/base.html" %}
+{% block style %}
+
+{% endblock %}
+{% block content %}
+    <div class="content">
+            <div class="row" style="min-height: 80vh">
+                <div class="col-md-12">
+                    <div class="card tab-card">
+                        <div class="card-header tab-card-header">
+                            <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="one-tab" data-toggle="tab" href="#one" role="tab" aria-controls="One" aria-selected="true">Dados Pessoais</a>
+                                    </li>
+                                    <li class="nav-item active">
+                                        <a class="nav-link" id="two-tab" data-toggle="tab" href="#two" role="tab" aria-controls="Two" aria-selected="false">Documentação</a>
+
+                                    <li class="nav-item active">
+                                        <a class="nav-link" id="tree-tab" data-toggle="tab" href="#tree" role="tab" aria-controls="Two" aria-selected="false">Alterar Senha</a>
+                                    </li>
+                                  </ul>
+                        </div>
+
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade {% if is_doc %}show active{% endif %} p-3" id="one" role="tabpanel" aria-labelledby="one-tab">
+                                <form class="col-md-8" method="post" action="?doc=0">
+                                    {% csrf_token %}
+                                    {% if message %}
+                                    <div class="alert alert-info" role="alert">
+                                        {{ message }}
+                                    </div>
+                                    {% endif %}
+                                     <div class="images">
+                                         {% if seller.photo == 'admin.jpg' %}
+                                        <div class="pic" style="height: 200px; line-height: 100px">
+                                            Foto
+                                        </div>
+                                        {% else %}
+                                        <div class="img" style="height: 200px;background-image: url('https://res.cloudinary.com/soboladas/image/upload/v1588066181/soboladas/profiles/{{ seller.photo }}');"><span>Remover</span></div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-11">
+                                            <input class="form-control" placeholder="Nome Apelido*" maxlength="30" name="name" value="{{ seller.user.first_name }} {{ seller.user.last_name }}">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group col-md-11">
+                                            <input class="form-control" placeholder="E-mail*" maxlength="70" name="email" value="{{ seller.user.email }}" readonly>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group col-md-8">
+                                            <input class="form-control" placeholder="ex: {{ seller.mobile }}" maxlength="9" name="mobile" value="{{ seller.mobile }}">
+                                        </div>
+
+                                        <div class="form-group col-md-6">
+                                            <input class="form-control" placeholder="Alternativo (ex: 8412345678)" maxlength="9" name="mobile_alternative" value="{{ seller.mobile_alternative }}">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group col-md-11">
+                                            <select data-placeholder="Província..." class="form-control" name="province" required>
+                                                {% for city in cities %}
+                                                <option value="{{ city.id }}" {% if city.id == seller.city.id %} selected {% endif %}>{{ city.name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group col-md-11">
+                                            <input type="hidden" name="photo" id="photo"/>
+                                            <input class="form-control" maxlength="70" placeholder="ex: Zimpeto, Maputo" name="address" value="{{ seller.address }}">
+                                        </div>
+                                    </div>
+
+                                  <button type="submit" class="btn btn-primary">Actualizar</button>
+                                </form>
+                            </div>
+                            <div class="tab-pane fade {% if not is_doc %}show active{% endif %} p-3" id="two" role="tabpanel" aria-labelledby="two-tab">
+                                <form class="col-md-8" method="post" action="?doc=1">
+                                    {% csrf_token %}
+                                    {% if message %}
+                                    <div class="alert alert-info" role="alert">
+                                        {{ message }}
+                                    </div>
+                                    {% endif %}
+                                    <div class="docs">
+                                        {% if seller.doc == '' %}
+                                        <div class="pic" style="height: 200px; line-height: 100px">
+                                            B.I Frontal
+                                        </div>
+                                        {% else %}
+                                        <div class="img" style="height: 200px;background-image: url('https://res.cloudinary.com/soboladas/image/upload/v1588066181/soboladas/docs/{{ seller.doc }}');"><span></span></div>
+                                        {% endif %}
+                                    </div>
+                                    <input type="hidden" name="doc" id="doc"/>
+                                    {% if seller.doc == '' %}
+                                    <b style="color: red; font-size: 10px">NB: Envie a foto frontal do seu Bilhete de Identidade, o nome, endereço e foto devem ser semelhantes aos dados do seu perfil do TOL.</b>
+                                    {% endif %}
+                                    <br/><br/>
+                                    {% if seller.doc == '' %}
+                                    <button type="submit" class="btn btn-primary">Enviar Identificação</button>
+                                    {% else %}
+                                    <button type="button" disabled class="btn btn-primary disabled">Enviar Identificação</button>
+                                    {% endif %}
+                                </form>
+                            </div>
+                            <div class="tab-pane fade p-3" id="tree" role="tabpanel" aria-labelledby="one-tab">
+                                <form class="col-md-8" method="post" action="?password=1">
+                                    {% csrf_token %}
+                                    {% if message %}
+                                    <div class="alert alert-info" role="alert">
+                                        {{ message }}
+                                    </div>
+                                    {% endif %}
+                                    <div class="form-row">
+                                        <div class="form-group col-md-11">
+                                            <label class="text-muted">Senha Actual</label>
+                                            <input type="password" class="form-control" placeholder="******" maxlength="30" name="current_password">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group col-md-11">
+                                            <label class="text-muted">Nova Senha</label>
+                                            <input type="password" class="form-control" placeholder="******" maxlength="30" name="current_password">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group col-md-11">
+                                            <label class="text-muted">Confirmar Nova Senha</label>
+                                            <input type="password" class="form-control" placeholder="******" maxlength="30" name="current_password">
+                                        </div>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary disabled" disabled>Actualizar</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /# column -->
+            </div><!-- .content -->
+    </div>
+    <div class="clearfix"></div>
+    <div class="modal fade" id="cropImagePop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel"></h4>
+            </div>
+            <div class="modal-body">
+                <div id="upload-demo" class="center-block"></div>
+                {% csrf_token %}
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="cropImageBtn" class="btn btn-success">Cortar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block js %}
+<script src="/dashboard/static/dashboard/assets/js/lib/chosen/chosen.jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.4/croppie.min.js"></script>
+<script>
+    (function ($) {
+      $(document).ready(function () {
+        var rawImg = '';
+        var $uploadCrop, tempFilename, imageId;
+        var images = $('.images')
+        var docs = $('.docs')
+        var type = 0
+        var host = 'https://www.tol.co.mz'
+        //var host = 'http://localhost:8000'
+
+        uploadImage()
+        submit()
+
+        var ID
+        var way = 0
+        var queue = []
+        var fullStock = 10
+        var speedCloseNoti = 1000
+        var selectedImages = 0
+
+        $uploadCrop = $('#upload-demo').croppie({
+			viewport: {
+				width: 200,
+				height: 200,
+			},
+			enforceBoundary: false,
+			enableExif: true
+		});
+
+		$('#cropImagePop').on('shown.bs.modal', function(){
+			// alert('Shown pop');
+		    $uploadCrop.croppie('bind', {
+			    url: rawImg
+			}).then(function(){
+			    console.log('jQuery bind complete');
+			});
+		});
+
+        function uploadImage() {
+          var button = $('.images .pic')
+          var button_doc = $('.docs .pic')
+          var uploader = $('<input type="file" accept="image/*" />')
+          var uploader_doc = $('<input type="file" accept="image/*" />')
+
+          button_doc.on('click', function () {
+            type = 1
+            uploader_doc.click()
+          })
+
+          button.on('click', function () {
+            type = 0
+            uploader.click()
+          })
+
+          uploader_doc.on('change', function () {
+              var reader = new FileReader()
+              reader.onload = function(event) {
+                $('.upload-demo').addClass('ready');
+				$('#cropImagePop').modal('show');
+				rawImg = event.target.result;
+              }
+              reader.readAsDataURL(uploader_doc[0].files[0])
+           })
+
+           uploader.on('change', function () {
+              var reader = new FileReader()
+              reader.onload = function(event) {
+                $('.upload-demo').addClass('ready');
+				$('#cropImagePop').modal('show');
+				rawImg = event.target.result;
+              }
+              reader.readAsDataURL(uploader[0].files[0])
+           })
+
+           $('#cropImageBtn').on('click', function (ev) {
+		        $uploadCrop.croppie('result', {
+				    type: 'base64',
+					format: 'jpeg',
+					size: {width: 200, height: 200}
+				}).then(function (resp) {
+				    if(type == 1){
+				        docs.html('<div class="img" style="height: 200px;background-image: url(\'' + resp + '\');" rel="'+ resp  +'"><span>B.I Frontal</span></div>');
+				        $('#doc').val(resp)
+				    }else{
+				        images.prepend('<div class="img" style="height: 200px;background-image: url(\'' + resp + '\');" rel="'+ resp  +'"><span>Remover</span></div>')
+				        $('#photo').val(resp)
+				    }
+
+                    selectedImages = selectedImages + 1
+                    if(selectedImages == 1) button.hide();
+                    $('#cropImagePop').modal('hide');
+			    });
+			});
+
+          images.on('click', '.img', function () {
+            $(this).remove()
+            button.show();
+            selectedImages = selectedImages - 1
+            images.prepend('<div class="pic" style="height: 200px; line-height: 100px">Foto</div>')
+            button = $('.images .pic')
+            uploader = $('<input type="file" accept="image/*" />');
+
+            $.ajax({
+                type: 'get',
+                url: host + '/dashboard/seller/api/profile/',
+                success: function(res){
+                    swal({type: 'success', title: 'A foto foi removida com sucesso.'});
+                    setTimeout(function(){
+                        location.reload()
+                    }, 2000);
+                },
+                error: function(res){
+                    swal({type: 'warning', title: 'Erro adicionar a lista de staff, por favor tente novamente!'})
+                }
+            });
+          });
+
+          docs.on('click', '.img', function () {
+            $(this).remove()
+            button_doc.show();
+            selectedImages = selectedImages - 1
+          })
+
+        }
+
+        function submit() {
+          var button = $('#send')
+
+          button.on('click', function () {
+            var images = $('.images .img')
+
+            if ($('#title').val().length < 10) {
+                alert('O título deve ter no mínimo 10 letras!')
+                return false;
+            }
+
+            if ($('#price').val().length < 3) {
+                alert('Digite um preço válido!')
+                return false;
+            }
+
+            if ($('#description').val().length < 20) {
+                alert('A descrição deve ter no mínimo 20 letras!')
+                return false;
+            }
+
+             $('#price').val($('#price').val().replace(" ", ""))
+
+             $('form').submit()
+          })
+        }
+  })
+})(jQuery)
+</script>
+{% endblock %}

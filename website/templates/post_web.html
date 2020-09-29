@@ -1,0 +1,195 @@
+{% extends "_layouts/main_post.html" %}
+
+{% block style %}
+    body {
+        background-color: rgba(200, 200, 200, .2)
+    }
+    header {
+        min-height: 10vh;
+        background: none
+    }
+    .card-post {
+        padding: 20px;
+        border-color: rgba(200, 200, 200, 0.1);
+        box-shadow: 1px 2px 2px rgba(200, 200, 200, 0.7)
+    }
+    .card-post.small {
+        height: 200px
+    }
+    .card.seller .avatar {
+        border-radius: 50%;
+        max-width: 125px;
+        margin-top: 5px
+    }
+
+{% endblock %}
+
+{% block content %}
+
+    </header>
+
+    <div class="s002">
+          <form action="/announcements/">
+            <div class="inner-form">
+              <div class="input-field first-wrap">
+                <div class="icon-wrap">
+                  <i class="fa fa-search"></i>
+                </div>
+                <input id="search" type="text" name="q" value="{{ request.GET.q }}" placeholder="3.080.961 Anúncios disponíveis" />
+              </div>
+              <div class="input-field fouth-wrap">
+                    <div class="icon-wrap">
+
+                    </div>
+                    <select data-trigger="" name="category">
+                        <option value="0">Todas Categorias</option>
+                        {% for category in categories %}
+                        <option value="{{ category.id }}">{{ category.name }}</option>
+                        {% endfor %}
+                    </select>
+                  </div>
+              <div class="input-field fifth-wrap">
+                <button class="btn btn-primary btn-search" type="submit">Procurar</button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+    <!--product details start-->
+    <div class="container">
+        <br/><h3 style="font-size: 25px;"><b>{{ post.title }}</b></h3><br/>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 card card-post">
+                        <div class="product-details-tab">
+                            <div id="img-1" class="zoomWrapper single-zoom" >
+                                        <a href="#">
+                                            <img id="zoom1" src="https://res.cloudinary.com/soboladas/image/upload/v1587285495/soboladas/anuncios/{{ post.thumb }}" data-zoom-image="dashboard/static/website/assets/img/product/productbig5.jpg" alt="big-1">
+                                        </a>
+                                    </div>
+                            <div class="single-zoom-thumb">
+
+                                        <ul class="s-tab-zoom owl-carousel single-product-active" id="gallery_01">
+                                            {% if post.photos.count == 1 %}
+
+                                            {% else %}
+                                                {% for photo in post.photos %}
+                                                <li>
+                                                    <a href="#" class="elevatezoom-gallery " data-update="" data-image="https://res.cloudinary.com/soboladas/image/upload/v1587285495/soboladas/anuncios/{{ photo.photo }}" data-zoom-image="dashboard/static/website/assets/img/product/productbig4.jpg">
+                                                        <img onclick="updatePhoto(this)" src="https://res.cloudinary.com/soboladas/image/upload/v1587285495/soboladas/anuncios/{{ photo.photo }}" alt="zo-th-1"/>
+                                                    </a>
+                                                </li>
+                                                {% endfor %}
+                                            {%endif%}
+                                        </ul>
+                                    </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 card card-post" style="margin-top: 40px">
+                        <h4>Descrição</h4>
+                        <p class="text-justify">{{ post.description }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1"></div>
+            <div class="col-md-5">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 card card-post small seller">
+<!--                        <h5 class="verified" style="font-size: 16px; font-weight: 600 ">#Vendedor</h5>-->
+                        <div class="row">
+                            <div class="col-md-5">
+                                <img src="https://res.cloudinary.com/soboladas/image/upload/v1587285495/soboladas/profiles/{{ post.seller.photo }}" class="avatar" alt="">
+                            </div>
+                            <div class="col-md-7">
+                                <h1 style="color: black;"><b>{{ post.seller.user.first_name }} {{ post.seller.user.last_name }}</b> <i class="lni lni-checkmark-circle" style="color: #007bff;"></i></h1>
+                                <h6 class="text-muted">Registado desde {{post.seller.user.date_joined|date:"M d, Y"}}</h6><br>
+                                <input class="btn btn-contact" onclick="this.value='{{post.seller.mobile}}'" type="button" value="Ver número" id="myButton1" style="font-weight: bold;margin-top: -15px; background-color:#007bff;"/>
+                                <a style="text-decoration: underline; margin-left: 10px" href="/announcements/?seller={{post.seller.id}}">Outros anúncios</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12 col-md-12 card card-post small seller" style="margin-top: 30px">
+                        {% load humanize %}
+                        <h3 class="text-center" style="color: #007bff; margin-top: 20px">
+                            {{ post.price |floatformat:2|intcomma}} MZN</h3>
+                        <div class="product_meta" style="margin-top: 10px;padding-left: 50px">
+                            <span>Categoria: <b style="padding-right: 50px" class="pull-right">{{ post.category.name }}</b></span><br>
+                            <span>Localização: <b style="padding-right: 50px" class="pull-right">{{post.seller.address}}</b></span><br>
+                            <span>Visualizações: <b style="padding-right: 50px" class="pull-right"><i class="fa fa-eye"></i> {{ post.views }}</b></span>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container" style="margin-top: 60px; margin-bottom: 60px">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="section_title">
+                        <h2>Anúncios Relacionados</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                       {% for post in posts %}
+                            <div class="col-md-3">
+                            <article class="single_product"  style="min-height:380px">
+                                <figure>
+                                    <div class="product_thumb">
+                                        <a class="primary_img" href="/announcement/{{ post.slug }}/"><img src="https://res.cloudinary.com/soboladas/image/upload/v1587285495/soboladas/anuncios/{{ post.thumb }}" alt=""></a>
+                                        <div class="label_product">
+                                            <span class="label_sale">Venda</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="product_name">
+                                       <h4><a href="#">{{ post.title }}</a></h4>
+                                    </div>
+                                    <div class="product_footer product_content grid_content">
+                                        <div class="price_box">
+                                            {% load humanize %}
+                                            <span>MZN {{ post.price |floatformat:2|intcomma }}</span>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="product_content list_content">
+                                        <div class="product_name">
+                                               <h4><a href="/announcement/{{ post.slug }}/">{{ post.title }}</a></h4>
+                                        </div>
+                                        <div class="price_box">
+                                            <span>MZN {{ post.price |floatformat:2|intcomma }}</span>
+                                        </div>
+                                        <div class="product_desc">
+                   Serviços                         <p class="text-justify">{{ post.description }}</p></div>
+
+                                        </div>
+                                </figure>
+                            </article>
+                        </div>
+                        {% endfor %}
+            </div>
+        </div>
+    <!--product area end-->
+{% endblock %}
+
+{% block js%}
+<script>
+    $('.change img').attr('src','/dashboard/static/website/assets/img/logo/logo.png');
+
+    $(".sticky-header").addClass("sticky");
+    $(window).on('scroll',function() {
+        $(".sticky-header").addClass("sticky");
+    });
+    function updatePhoto(obj){
+        document.getElementById('zoom1').src = obj.src
+    }
+</script>
+{% endblock %}

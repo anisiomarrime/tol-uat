@@ -1,0 +1,82 @@
+{% extends "_layouts/main.html" %}
+
+{% block style %}
+    header {
+        min-height: 45vh;
+    }
+{% endblock %}
+
+{% block content %}
+        <div class="s002">
+          <form action="/announcements/">
+            <div class="inner-form">
+              <div class="input-field first-wrap">
+                <div class="icon-wrap">
+                  <i class="fa fa-search"></i>
+                </div>
+                <input id="search" type="text" name="q" value="{{ request.GET.q }}" placeholder="3.080.961 Anúncios disponíveis" />
+              </div>
+              <div class="input-field fouth-wrap">
+                    <div class="icon-wrap">
+
+                    </div>
+                    <select data-trigger="" name="category">
+                        <option value="0">Todas Categorias</option>
+                        {% for category in categories %}
+                        <option value="{{ category.id }}" {% if categoria.name == category.name %}selected{% endif %}>{{ category.name }}</option>
+                        {% endfor %}
+                    </select>
+                  </div>
+              <div class="input-field fifth-wrap">
+                <button class="btn btn-primary btn-search" type="submit">Procurar</button>
+              </div>
+            </div>
+          </form>
+        </div>
+    </header>
+
+    <!--shop  area start-->
+    <div class="shop_area shop_reverse mt-45 mb-50" style="min-height: 33vh">
+        <div class="container">
+            <div class="row">
+                <div class="container">
+                    <h3 class="text-center">#ficaemcasa com o TOL</h3><br/><br/>
+                    <div class="row">
+                        {% if not posts %}
+                           <div class="container">
+                               <h1 style="font-family: Arial; color:black;">Nenhum resultado encontrado</h1>
+                           </div>
+                        {% endif %}
+
+                        {% for product in posts %}
+                            <div class="col-lg-3" style="margin-bottom:10px">
+                                <article class="single_product" style="min-height: 380px; padding: 0">
+                                       <div class="product_thumb">
+                                           <a class="primary_img" href="/announcement/{{ product.slug }}/">
+                                               <img src="https://res.cloudinary.com/soboladas/image/upload/v1587285495/soboladas/anuncios/{{ product.thumb }}" alt=""></a>
+                                       </div>
+
+                                       <div class="product_content" style="padding: 10px">
+
+                                           <div class="product_name">
+                                               <h4 style="font-size: 14px; font-weight: 300"><a href="/announcement/{{ product.slug }}/">{{ product.title }}</a></h4>
+                                           </div>
+                                           {% load humanize %}
+                                           <div class="price_box">
+                                               <span style="font-size: 12px; font-weight: 400">{{ product.price |floatformat:2|intcomma }} MZN</span>
+                                           </div>
+                                       </div>
+                               </article>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--shop  area end-->
+{% endblock %}
+
+{% block js %}
+
+{% endblock %}

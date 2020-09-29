@@ -1,0 +1,124 @@
+{% extends "_layouts/base.html" %}
+
+{% block content %}
+    <div class="content">
+            <div class="animated fadeIn">
+                <div class="row" style="min-height: 80vh">
+
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <strong class="card-title">Anúncios</strong>
+                            </div>
+                            <div class="card-body">
+                                {% load humanize %}
+                                <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Título</th>
+                                            <th>Categoria</th>
+                                            <th>Preço</th>
+                                            <th>Visualizações</th>
+                                            <th>Estado</th>
+                                            <th>Definições</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for post in posts %}
+                                        <tr id="announcement-{{ post.id }}">
+                                            <td>{{ post.title }}</td>
+                                            <td>{{ post.category.name }}</td>
+                                            <td>{{ post.price|floatformat:2|intcomma }}</td>
+                                            <td class="text-center">{{ post.views }}</td>
+                                            <td class="status">
+                                            {% if post.status == 0 %}
+                                                Esperando aprovação
+                                                {% elif post.status == 1 %}
+                                                    Publicado
+                                                {% else %}
+                                                    Removido
+                                            {% endif %}
+                                            </td>
+                                            <td class="buttons">
+                                                <a href="/dashboard/post/edit/{{ post.id }}/" class="btn btn-primary" title="Editar"><i class="fa fa-edit"></i></a>
+                                                {% if is_admin and post.status == 0 %}
+                                                <button type="button" class="btn btn-success btn-approve" title="Aprovar" data-id="{{ post.id }}"><i class="fa fa-check"></i></button>
+                                                {% endif %}
+                                                <button type="button" class="btn btn-danger btn-remove" title="Remover" data-id="{{ post.id }}"><i class="fa fa-trash"></i></button>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- .animated -->
+        </div><!-- .content -->
+
+
+        <div class="clearfix"></div>
+{% endblock %}
+
+{% block js %}
+    <script>
+        jQuery(document).ready(function ($) {
+
+            $('.btn-approve').on('click', function(){
+                approveAnnouncement($(this).data('id'));
+            })
+
+            $('.btn-remove').on('click', function(){
+                deleteAnnouncement($(this).data('id'));
+            })
+
+            function approveAnnouncement(id){
+                var host = 'https://www.tol.co.mz'
+                $.ajax({
+                    type: 'get',
+                    url: host + '/dashboard/post/api/approve/'+id+'/',
+                    success: function(res){
+                        swal({type: 'success', title: 'Anúncio aprovado com sucesso!'})
+                        setTimeout(function(){
+                            location.reload()
+                        }, 2000);
+                    },
+                    error: function(res){
+                        swal({type: 'warning', title: 'Erro ao aprovar anúncio, por favor tente novamente!'})
+                    }
+                });
+            }
+
+            function deleteAnnouncement(id){
+                var host = 'https://www.tol.co.mz'
+                swal({
+                    title: "Remover Anúncio",
+                    text: "Deseja remover permanentemente este anúncio?",
+                    type: "warning",
+                    confirmButtonText: "Sim, remover",
+                    cancelButtonText: "Não",
+                    showCancelButton: true
+                }).then((result) => {
+                    if (result.value) {
+                       $.ajax({
+                            type: 'get',
+                            url: host + '/dashboard/post/api/remove/'+id+'/',
+                            success: function(res){
+                                swal({type: 'success', title: 'Anúncio removido com sucesso!'})
+                                setTimeout(function(){
+                                    location.reload()
+                                }, 2000);
+                            },
+                            error: function(res){
+                                swal({type: 'warning', title: 'Erro ao remover anúncio, por favor tente novamente!'})
+                            }
+                       });
+                    } else if (result.dismiss === 'cancel') {
+
+                    }
+                })
+            }
+        });
+    </script>
+{% endblock %}

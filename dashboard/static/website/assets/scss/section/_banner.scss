@@ -1,0 +1,134 @@
+/*  04. banner section css here  */
+.banner_area{
+    @media #{$large-mobile}{
+       margin-bottom: 13px;
+    }
+    &.mb-50{
+        @media #{$large-mobile}{
+           margin-bottom: 20px;
+        }
+    }
+}
+.single_banner{
+    @media #{$large-mobile}{
+        margin-bottom: 30px;
+    }
+}
+.banner_thumb{
+    position: relative;
+    overflow: hidden;
+    border: 1px solid $grey_color;
+    &:hover{
+        & img{
+            transform: scale(1.05);
+        }
+    }
+    & a{
+        @media #{$large-mobile}{
+           width: 100%;
+        }
+        & img{
+            @include transition(.3s);
+            @media #{$large-mobile}{
+               width: 100%;
+            }
+        }
+    }
+}
+
+/*home three css here*/
+.header_sticky{
+    display: none;
+    &.sticky-header.sticky{
+        display: block;
+    }
+}
+.banner_style3_inner{
+    overflow: hidden;
+    border: 1px solid $grey_color;
+    @media #{$large-mobile}{
+        border: 0;
+        padding: 0 15px;
+    }
+    & .single_banner{
+        border-right: 1px solid $grey_color;
+        &:first-child{
+            width: 28.385%;
+            float: left;
+            @media #{$large-mobile}{
+                width: 100%;
+                float: inherit;
+                border: 1px solid $grey_color;
+            }
+        }
+        &:last-child{
+            width: 28.385%;
+            float: left;
+            border-right: 0;
+            @media #{$large-mobile}{
+                width: 100%;
+                float: inherit;
+                border: 1px solid $grey_color;
+            }
+        }
+        &:nth-child(2){
+            width: 43.23%;
+            float: left;
+            @media #{$large-mobile}{
+                width: 100%;
+                float: inherit;
+                border: 1px solid $grey_color;
+            }
+        }
+        
+    }
+    & .banner_thumb{
+        border: 0;
+    }
+}
+
+
+
+
+/*home four css here*/
+.sidebar_banner_four{
+    &.mb-50{
+        @media #{$large-mobile}{
+            margin-bottom: 50px;
+        }
+    }
+    & .banner_thumb{
+        @media #{$tablet-device}{
+            width: 33%;
+            margin: 0 auto;
+        }
+        &  a{
+            & img{
+                @media #{$tablet-device}{
+                    width: 100%;
+                }
+            }
+        }
+    }
+}
+
+
+
+
+/*home five css here*/
+.banner5_sidebar{
+    @media #{$large-mobile}{
+        margin-top: 25px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+

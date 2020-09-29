@@ -1,0 +1,56 @@
+/*brand css here*/
+.brand_area{
+    padding: 40px 0;
+    @media #{$large-mobile}{
+        padding: 35px 0;
+    }
+}
+.brand_container{
+    & .single_brand{
+        & img{
+            width: inherit;
+            margin: 0 auto;
+        }
+    }
+    &:hover{
+        & .owl-nav{
+            & div{
+                opacity: 1;
+                visibility: visible;
+            }
+        }
+    }
+    & .owl-nav{
+        &.disabled{
+            display: block;
+        }
+        & div{
+            position: absolute;
+            top: 50%;
+            transform: translatey(-50%);
+            left: 0;
+            font-size: 18px;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            border: 1px solid #a2a2a2;
+            border-radius: 3px;
+            @include transition(.3s);
+            opacity: 0;
+            visibility: hidden;
+            background: $white;
+            &:hover{
+                color: $white;
+                background: $secondary_color;
+                border-color: $secondary_color;
+            }
+            &.owl-next{
+                right: 0;
+                left: auto;
+            }
+        }
+    }
+}
+
+

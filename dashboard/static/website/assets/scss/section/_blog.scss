@@ -1,0 +1,343 @@
+/* 05. blog area css here */
+.blog_section {
+    @media #{$large-mobile}{
+       margin-bottom: 60px;
+    }
+    
+}
+.blog_carousel{
+    &:hover{
+        & .owl-nav{
+            & div{
+                opacity: 1;
+                visibility: visible;
+            }
+        }
+    }
+    & .owl-nav{
+        &.disabled{
+            display: block;
+        }
+        & div{
+            position: absolute;
+            top: 50%;
+            transform: translatey(-50%);
+            left: 0;
+            font-size: 18px;
+            width: 45px;
+            height: 45px;
+            line-height: 43px;
+            text-align: center;
+            border: 1px solid #a2a2a2;
+            @include transition(.3s);
+            opacity: 0;
+            visibility: hidden;
+            background: $white;
+            @media #{$large-mobile}{
+               display: none;
+            }
+            &:hover{
+                color: $white;
+                background: $fonts_color;
+                border-color: $fonts_color;
+            }
+            &.owl-next{
+                right: 0;
+                left: auto;
+            }
+        }
+    }
+    
+    & .col-lg-3{
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}
+
+
+
+.blog_content {
+	padding-top: 25px;
+    @media #{$large-mobile}{
+       padding-top: 19px;
+    }
+    & p.post_desc{
+        font-size: 14px;
+        line-height: 23px;
+        margin-bottom: 0;
+        @media #{$large-mobile}{
+            font-size: 13px;
+            line-height: 22px;
+        }
+    }
+    & h4{
+        font-size: 15px;
+        text-transform: uppercase;
+        line-height: 20px;
+        margin-bottom: 16px;
+        font-weight: 700;
+        @media #{$desktop-device}{
+            font-size: 14px;
+        }
+        @media #{$large-mobile}{
+           font-size: 13px;
+            margin-bottom: 12px;
+        }
+        & a{
+            &:hover{
+                color: $secondary_color;
+            }
+        }
+    }
+    & .btn_more{
+        margin-top: 15px;
+        @media #{$large-mobile}{
+           margin-top: 9px;
+        }
+        & a{
+            font-size: 12px;
+            line-height: 20px;
+            text-transform: uppercase;
+            display: inline-block;
+            font-weight: 700;
+            &:hover{
+                color: $secondary_color;
+            }
+            & i{
+                margin-left: 10px;
+                @media #{$large-mobile}{
+                   margin-left: 5px;
+                }
+            }
+        }
+        
+    }
+}
+
+/*hone two css here*/
+.color_two{
+    & .blog_content  {
+        & h4{
+            & a{
+               &:hover{
+                    color: $secondary_color2;
+                } 
+            }
+        }
+        & .btn_more{
+            & a{
+               &:hover{
+                    color: $secondary_color2;
+                } 
+            }
+        }
+    }
+    & .blog_carousel{
+        & .owl-nav{
+            & div{
+                &:hover{
+                    background: $secondary_color2;
+                    border-color: $secondary_color2;
+                }
+            }
+        }
+    }
+     
+}
+.blog_two{
+    background: #f8f8f8;
+    padding: 65px 0 64px;
+    margin-bottom: 0;
+    @media #{$large-mobile}{
+       padding: 55px 0 54px;
+    }
+}
+
+
+/*home three css here*/
+.blog_s_three{
+    background: #f8f8f8;
+    padding: 68px 0 65px;
+    @media #{$large-mobile}{
+       padding: 58px 0 55px;
+    }
+    & .section_title{
+        & h2{
+           background: #f8f8f8; 
+        }
+    }
+}
+
+.color_three{
+    & .blog_content{
+        & h4{
+            & a{
+                &:hover{
+                    color: $secondary_color3;
+                }
+            }
+        }
+        & .btn_more{
+            & a{
+                &:hover{
+                    color: $secondary_color3;
+                }
+            }
+        }
+    }
+    & .owl-nav{
+        & div{
+            &:hover{
+                background: $secondary_color3;
+                border-color: $secondary_color3;
+            }
+        }
+    }
+}
+
+
+/*home five css here*/
+.color_five{
+    & .blog_content{
+        & h4{
+            & a{
+                &:hover{
+                    color: $secondary_color4;
+                }
+            }
+        }
+        & .btn_more{
+            & a{
+                &:hover{
+                    color: $secondary_color4;
+                }
+            }
+        }
+    }
+    & .owl-nav{
+        & div{
+            &:hover{
+                background: $secondary_color4;
+                border-color: $secondary_color4;
+            }
+        }
+    }
+}
+
+
+.blog_five{
+    background: #f8f8f8;
+    padding: 65px 0 65px;
+    @media #{$large-mobile}{
+        padding: 57px 0 53px;
+        margin-bottom: 0;
+    }
+    & .section_title{
+        & h2{
+            background: #f8f8f8;
+        }
+    }
+    
+}
+
+/*home six css here*/
+.color_six{
+    & .blog_content{
+        & h4{
+            & a{
+                &:hover{
+                    color: $secondary_color5;
+                }
+            }
+        }
+        & .btn_more{
+            & a{
+                &:hover{
+                    color: $secondary_color5;
+                }
+            }
+        }
+    }
+    & .owl-nav{
+        & div{
+            &:hover{
+                background: $secondary_color5;
+                border-color: $secondary_color5;
+            }
+        }
+    }
+}
+
+
+
+/*home seven css here*/
+.color_seven{
+     & .blog_content{
+        & h4{
+            & a{
+                &:hover{
+                    color: $secondary_color6;
+                }
+            }
+        }
+        & .btn_more{
+            & a{
+                &:hover{
+                    color: $secondary_color6;
+                }
+            }
+        }
+    }
+    & .owl-nav{
+        & div{
+            &:hover{
+                background: $secondary_color6;
+                border-color: $secondary_color6;
+            }
+        }
+    }
+}
+
+
+
+
+
+/*home eight css here*/
+.color_eight{
+    & .blog_content{
+        & h4{
+            & a{
+                &:hover{
+                    color: $secondary_color7;
+                }
+            }
+        }
+        & .btn_more{
+            & a{
+                &:hover{
+                    color: $secondary_color7;
+                }
+            }
+        }
+    }
+    & .owl-nav{
+        & div{
+            &:hover{
+                background: $secondary_color7;
+                border-color: $secondary_color7;
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+

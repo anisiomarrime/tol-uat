@@ -1,0 +1,63 @@
+{% extends "_layouts/base.html" %}
+
+{% block content %}
+    <div class="content">
+            <div class="animated fadeIn">
+                <div class="row" style="min-height: 80vh">
+
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <strong class="card-title">Pagamentos</strong>
+                            </div>
+                            <div class="card-body">
+                                <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>#ID</th>
+                                            <th>Vendedor</th>
+                                            <th>Pacote</th>
+                                            <th>Referência</th>
+                                            <th>Status</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for payment in payments %}
+                                        <tr>
+                                            <td>{{ payment.id }}</td>
+                                            <td>{{ payment.seller.user.first_name }} {{ payment.seller.user.last_name }}</td>
+                                            <td>{{ payment.package.name }}</td>
+                                            <td>{{ payment.ref }}</td>
+                                            <td class="status">
+                                            {% if payment.status == 1 %}
+                                                APROVADO
+                                                {% else %}
+                                                    PENDENTE
+                                            {% endif %}
+                                            </td>
+                                            <td class="buttons text-center">
+                                                <button type="button" class="btn btn-success" title="Aprovar" id="btn-approve" data-id="{{ payment.id }}"><i class="fa fa-check"></i></button>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                        {% if not payments %}
+                                            <tr>
+                                                <td colspan="6">Nenhum pagamento emitido.</td>
+                                            </tr>
+                                        {% endif %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- .animated -->
+        </div><!-- .content -->
+
+    <div class="clearfix"></div>
+{% endblock %}
+
+{% block js %}
+
+{% endblock %}

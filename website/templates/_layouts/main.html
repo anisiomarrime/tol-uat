@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt">
+	<head>
+		<meta charset="UTF-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+
+        <title>{% block title %}TOL{% endblock %}</title>
+        <!-- CSS
+        ========================= -->
+        <!-- Plugins CSS -->
+        <link rel="stylesheet" href="/dashboard/static/website/assets/css/plugins.css">
+        <!-- Main Style CSS -->
+        <link rel="stylesheet" href="/dashboard/static/website/assets/css/style.css">
+        <link href="https://cdn.lineicons.com/2.0/LineIcons.css" rel="stylesheet">
+
+       <link rel="icon"
+      type="image/png"
+      href="/dashboard/static/website/assets/img/icon/icon.png">
+
+
+        <style>
+            header {
+                min-height: 65vh;
+                background: url('/dashboard/static/website/assets/img/bg-blue.jpg')
+            }
+            .btn-round {
+                border-radius: 20px;
+                font-weight: 300;
+                font-size: 14px;
+                padding: 10px
+            }
+            header .search h2,
+            header .search p {
+                text-align: center;
+            }
+            header .search h2 {
+                font-size: 36px;
+                margin-top: 50px
+            }
+            header .search p {
+                font-weight: 300
+            }
+            .categories .card {
+                margin-right: 3.3%
+            }
+            .categories .card {
+                padding: 30px;
+                border: none!important;
+                box-shadow: 2px 2px 2px rgba(200, 200, 200, 0.5)
+            }
+            .categories .card span {
+                display: block;
+                text-align: center
+            }
+            .categories .card span svg {
+                width: 40px;
+                fill: #007bff;
+            }
+            .single_product {
+                box-shadow: 2px 2px 2px rgba(200, 200, 200, 0.3)
+            }
+            {% block style %}
+
+            {% endblock %}
+        </style>
+    </head>
+
+    <body>
+        {% include "_layouts/header_web.html" %}
+
+        {% block content %}
+
+        {% endblock %}
+
+        {% include "_layouts/footer_web.html" %}
+    </body>
+
+    <!-- Plugins JS -->
+    <script src="/dashboard/static/website/assets/js/plugins.js"></script>
+
+    <!-- Main JS -->
+    <script src="/dashboard/static/website/assets/js/main.js"></script>
+    <script src="/dashboard/static/website/assets/js/choices.js"></script>
+    <script>
+      const choices = new Choices('[data-trigger]',
+      {
+        searchEnabled: false,
+        itemSelectText: '',
+      });
+
+    </script>
+    {% block js %}
+
+    {% endblock %}
+
+</html>

@@ -1,0 +1,119 @@
+/* 21. shipping css here */
+.shipping_area{
+    @media #{$tablet-device}{
+        margin-bottom: 28px;
+    }
+    @media #{$large-mobile}{
+        margin-bottom: 23px;
+    }
+}
+
+.single_shipping{
+    display: flex;
+    align-items: center;
+    @media #{$tablet-device}{
+        margin-bottom: 22px;
+    }
+    @media #{$large-mobile}{
+        margin-bottom: 25px;
+    }
+    &:hover{
+        & .shipping_icone{
+            & img{
+               transform: rotatey(180deg);
+            }
+        }
+    }
+}
+
+.shipping_icone{
+    margin-right: 15px;
+    @media #{$desktop-device}{
+        margin-right: 7px;
+    }
+    & img{
+         @include transition(.5s);
+        @media #{$desktop-device}{
+           width: 30px;
+        }
+    }
+}
+.shipping_content{
+    & h4{
+        font-size: 14px;
+        line-height: 18px;
+        text-transform: capitalize;
+        font-weight: 500;
+        margin-bottom: 3px;
+        @media #{$desktop-device}{
+           font-size: 13px;
+        }
+        @media #{$tablet-device}{
+            font-size: 13px;
+        }
+        @media #{$large-mobile}{
+            font-size: 13px;
+        }
+    }
+    & p{
+        font-size: 14px;
+        line-height: 23px;
+        @media #{$desktop-device}{
+            font-size: 13px;
+            line-height: 20px;
+        }
+        
+    }
+}
+
+
+
+/*home four css here*/
+.shipping_four{
+    border: 1px solid $grey_color;
+    @media #{$tablet-device}{
+        border: 0;
+        overflow: hidden;
+        margin-bottom: 22px;
+    }
+    @media #{$large-mobile}{
+       margin-bottom: 50px;
+    }
+    & .single_shipping{
+        padding: 30px 20px;
+        border-bottom: 1px solid $grey_color;
+        &:last-child{
+            border-bottom: 0;
+        }
+        @media #{$desktop-device}{
+            padding: 20px 15px;
+        }
+        @media #{$tablet-device}{
+            padding: 0;
+            width: 50%;
+            float: left;
+            margin-bottom: 28px;
+            border-bottom: 0;
+        }
+        @media #{$large-mobile}{
+           margin-bottom: 0;
+        }
+    }
+    & .shipping_icone{
+        @media #{$desktop-device}{
+            margin-right: 12px;
+        }
+    }
+    & .shipping_content {
+        & h4{
+            color: $secondary_color;
+        }
+    }
+}
+
+
+
+
+
+
+

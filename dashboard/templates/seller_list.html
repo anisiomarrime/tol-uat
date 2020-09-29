@@ -1,0 +1,142 @@
+{% extends "_layouts/base.html" %}
+
+{% block content %}
+    <div class="content">
+            <div class="animated fadeIn">
+                <div class="row" style="min-height: 80vh">
+
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <strong class="card-title">Vendedores</strong>
+                            </div>
+                            <div class="card-body">
+                                <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>#ID</th>
+                                            <th>Nome Completo</th>
+                                            <th>Pacote</th>
+                                            <th class="text-center">Anúncios</th>
+                                            <th class="text-center">Registado em</th>
+                                            <th>Status</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for seller in sellers %}
+                                        <tr>
+                                            <td>{{ seller.id }}</td>
+                                            <td>{{ seller.user.first_name }} {{ seller.user.last_name }}</td>
+                                            <td>{{ seller.package.name }}</td>
+                                            <td class="text-center">{{ seller.total_posts }}</td>
+                                            <td>{{ seller.user.date_joined }}</td>
+                                            <td class="status">
+                                            {% if seller.status == 1 %}
+                                                Activo
+                                            {% endif %}
+                                            </td>
+                                            <td class="buttons text-center">
+                                                <button type="button" class="btn btn-danger" title="Bloquear" id="btn-block" data-id="{{ seller.id }}"><i class="fa fa-ban"></i></button>
+                                                {% if not seller.user.is_staff %}
+                                                <button type="button" class="btn btn-success" title="Tornar Staff" id="btn-staff" data-id="{{ seller.id }}"><i class="fa fa-check"></i></button>
+                                                {% endif %}
+                                                {% if seller.is_verified %}
+                                                <button type="button" class="btn btn-primary" title="Aprovar Documento" id="btn-doc" data-id="{{ seller.id }}"><i class="fa fa-file"></i></button>
+                                                <button type="button" class="btn btn-success" title="Visualizar Documento" data-toggle="modal" data-target="#docModal" data-img="{{ seller.doc }}"><i class="fa fa-eye"></i></button>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- .animated -->
+        </div><!-- .content -->
+
+
+    <div class="clearfix"></div>
+    <!-- Modal -->
+    <div class="modal fade" id="docModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Documento</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <img src="" id="img-doc"/>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script>
+        jQuery(document).ready(function ($) {
+            $('#docModal').on('shown.bs.modal', function (event) {
+                var button = $(event.relatedTarget)
+                $('#img-doc').attr('src', button.data('img'));
+            })
+
+            $('#btn-staff').on('click', function(){
+                staffUser($(this).data('id'));
+            })
+
+            $('#btn-doc').on('click', function(){
+                docSeller($(this).data('id'));
+            })
+
+            $('#btn-block').on('click', function(){
+                swal({type: 'warning', title: 'Esta função ainda não está disponível!'})
+            })
+
+            function staffUser(id){
+
+                var host = 'https://www.tol.co.mz'
+                // var host = 'http://localhost:8000'
+                $.ajax({
+                    type: 'get',
+                    url: host + '/dashboard/seller/api/staff/'+id+'/',
+                    success: function(res){
+                        swal({type: 'success', title: 'O vendedor foi adicionado a lista de Staff!'})
+                        setTimeout(function(){
+                            location.reload()
+                        }, 2000);
+                    },
+                    error: function(res){
+                        swal({type: 'warning', title: 'Erro adicionar a lista de staff, por favor tente novamente!'})
+                    }
+                });
+            }
+
+            function docSeller(id){
+
+                var host = 'https://www.tol.co.mz'
+                // var host = 'http://localhost:8000'
+                $.ajax({
+                    type: 'get',
+                    url: host + '/dashboard/seller/api/doc/'+id+'/',
+                    success: function(res){
+                        swal({type: 'success', title: 'O documento foi aprovado com sucesso!'})
+                        setTimeout(function(){
+                            location.reload()
+                        }, 2000);
+                    },
+                    error: function(res){
+                        swal({type: 'warning', title: 'Erro ao aprovar, por favor tente novamente!'})
+                    }
+                });
+            }
+         });
+    </script>
+{% endblock %}

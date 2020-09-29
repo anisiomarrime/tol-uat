@@ -1,0 +1,215 @@
+{% extends "_layouts/base.html" %}
+{% block style %}
+@import url(https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css);
+@import url(https://fonts.googleapis.com/css?family=Raleway:400,500,800);
+@import url(https://fonts.googleapis.com/css?family=Montserrat:800);
+.snip1214 {
+  font-family: 'Raleway', Arial, sans-serif;
+  color: #000000;
+  text-align: center;
+  font-size: 16px;
+  width: 100%;
+  max-width: 100%;
+  margin: 40px 10px;
+  padding-left: 10%
+}
+.snip1214 .plan {
+  margin: 0;
+  width: 30%;
+  position: relative;
+  float: left;
+  background-color: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+.snip1214 * {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.snip1214 header {
+  position: relative;
+}
+.snip1214 .plan-title {
+  position: relative;
+  top: 0;
+  font-weight: 600;
+  padding: 25px 10px 10px 10px;
+  margin: 0 auto;
+  margin: 0;
+  display: inline-block;
+  color: #222f3d;
+  text-transform: uppercase;
+  font-size: 30px
+}
+.snip1214 .plan-cost {
+  padding: 0px 10px 20px;
+}
+.snip1214 .plan-price {
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-weight: 800;
+  font-size: 2.0em;
+  color: #34495e;
+}
+.snip1214 .plan-type {
+  opacity: 0.6;
+}
+.snip1214 .plan-features {
+  padding: 0;
+  margin: 0;
+  text-align: center;
+  list-style: outside none none;
+  font-size: 0.8em;
+}
+.snip1214 .plan-features li {
+  border-top: 1px solid #d2d7e2;
+  padding: 10px 5%;
+}
+.snip1214 .plan-features li:nth-child(even) {
+  background: rgba(0, 0, 0, 0.08);
+}
+.snip1214 .plan-features i {
+  margin-right: 8px;
+  opacity: 0.4;
+}
+.snip1214 .plan-select {
+  border-top: 1px solid #d2d7e2;
+  padding: 10px 10px 0;
+}
+.snip1214 .plan-select a {
+  background-color: #222f3d;
+  color: #ffffff;
+  text-decoration: none;
+  padding: 0.5em 1em;
+  -webkit-transform: translateY(50%);
+  transform: translateY(50%);
+  font-weight: 800;
+  text-transform: uppercase;
+  display: inline-block;
+}
+.snip1214 .plan-select a:hover {
+  background-color: #46627f;
+}
+.snip1214 .featured {
+  margin-top: -10px;
+  background-color: #34495e;
+  color: #ffffff;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+  z-index: 1;
+}
+.snip1214 .featured .plan-title,
+.snip1214 .featured .plan-price {
+  color: #ffffff;
+}
+.snip1214 .featured .plan-cost {
+  padding: 10px 10px 20px;
+}
+.snip1214 .featured .plan-features li {
+  border-top: 1px solid rgba(255, 255, 255, 0.4);
+}
+.snip1214 .featured .plan-select {
+  padding: 20px 10px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.4);
+}
+@media only screen and (max-width: 767px) {
+  .snip1214 .plan {
+    width: 50%;
+  }
+  .snip1214 .plan-title,
+  .snip1214 .plan-select a {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+  .snip1214 .plan-cost,
+  .snip1214 .featured .plan-cost {
+    padding: 20px 10px 20px;
+  }
+  .snip1214 .plan-select,
+  .snip1214 .featured .plan-select {
+    padding: 10px 10px 10px;
+  }
+  .snip1214 .featured {
+    margin-top: 0;
+  }
+}
+@media only screen and (max-width: 440px) {
+  .snip1214 .plan {
+    width: 100%;
+  }
+}
+a.disabled{
+  opacity: 0.7;
+  cursor: not-allowed
+}
+{% endblock %}
+{% block content %}
+    <div class="content">
+            <div class="animated fadeIn">
+                <div class="row" style="min-height: 80vh">
+                    <div class="col-md-12">
+                        <div class="snip1214">
+                            {% for package in packages %}
+                              <div class="plan{% if package.id == 2 %} featured {% endif %}">
+                                <h3 class="plan-title">
+                                  {{ package.name }}
+                                </h3>
+                                <div class="plan-cost"><span class="plan-price">{{ package.price }}</span><span class="plan-type">/ mês</span></div>
+                                <ul class="plan-features">
+                                  <li><i class="ion-checkmark"> </i>{{ package.max_posts }} anúncios Diariamente</li>
+                                  <li><i class="ion-checkmark"> </i>{{ package.post_duration }}h de duração dos Anúncios</li>
+                                  <li><i class="ion-checkmark"> </i>Painel de Desempenho</li>
+                                  <li><i class="ion-checkmark"> </i>
+                                    {% if package.id == 2 %}
+                                    5 Fotos por anúncio
+                                    {% else %}
+                                    3 Fotos por anúncio
+                                    {% endif %}
+                                  </li>
+                                  <li><i class="{% if package.id == 2 %} ion-checkmark {% else %} ion-close {% endif %}"> </i>24/7 Suporte</li>
+                                  <li><i class="{% if package.id == 2 %} ion-checkmark {% else %} ion-close {% endif %}"> </i>Selo Premium</li>
+                                  {% if package.id == 2 %}
+                                  <li><i class="ion-checkmark"> </i>SEO Optimizado</li>
+                                  {% endif %}
+                                </ul>
+                                <div class="plan-select">
+                                  <a href="#" data-id="{% if package.id == seller.package.id %}package.id{% endif %}" class="btn-update {% if package.id == seller.package.id %} disabled {% endif %}">
+                                    {% if package.id == seller.package.id %} Pacote Actual {% else %} Quero Este Pacote {% endif %}
+                                  </a>
+                                </div>
+                              </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div><!-- .animated -->
+        </div><!-- .content -->
+
+    <div class="clearfix"></div>
+{% endblock %}
+
+{% block js %}
+  <script>
+        jQuery(document).ready(function ($) {
+
+            $('.btn-update').on('click', function(){
+                var id = $(this).data('id')
+                if(id) return false;
+
+                updatePack();
+            })
+
+            function updatePack(){
+              var host = 'https://www.tol.co.mz'
+              $.ajax({
+                    type: 'get',
+                    url: host + '/dashboard/requests/upgrade/',
+                    success: function(res){
+                        swal({type: 'success', title: 'O seu pedido foi enviado, entraremos em contacto para finalizar o processo, Obrigado!'})
+                    },
+                    error: function(res){
+                        swal({type: 'warning', title: 'Erro ao enviar pedido, por favor tente novamente!'})
+                    }
+                });
+
+            }
+         });
+    </script>
+{% endblock %}

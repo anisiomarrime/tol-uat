@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="pt">
+	<head>
+		<meta charset="UTF-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+
+        <title>{% block title %}TOL - Moçambique{% endblock %}</title>
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.0/normalize.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pixeden-stroke-7-icon@1.2.3/pe-icon-7-stroke/dist/pe-icon-7-stroke.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.0/css/flag-icon.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+        <link rel="shortcut icon" type="image/png" href="/dashboard/static/dashboard/website/favicon.png" />
+
+        <link rel="stylesheet" href="/dashboard/static/assets/css/cs-skin-elastic.css">
+        <link rel="stylesheet" href="/dashboard/static/dashboard/assets/css/style.css">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.4/croppie.min.css">
+
+        <link href="https://cdn.jsdelivr.net/npm/chartist@0.11.0/dist/chartist.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/jqvmap@1.5.1/dist/jqvmap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.min.css">
+
+        <link href="https://cdn.jsdelivr.net/npm/weathericons@2.1.0/css/weather-icons.css" rel="stylesheet" />
+        <link href="https://cdn.jsdelivr.net/npm/fullcalendar@3.9.0/dist/fullcalendar.min.css" rel="stylesheet" />
+        <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+
+        <link rel="stylesheet" href="/dashboard/static/dashboard/assets/css/lib/chosen/chosen.min.css">
+
+        <style>
+            table td,
+            table th{
+                font-size: 13px
+            }
+            td.buttons {
+                min-width: 80px;
+                vertical-align: middle;
+            }
+            td.buttons button,  td.buttons a{
+                padding: 1px 6px
+            }
+            .images, .docs {
+              display: flex;
+              flex-wrap:  wrap;
+              margin-top: 20px;
+            }
+            .docs .img, .docs .pic, .images .img, .images .pic {
+              flex-basis: 30%;
+              margin-bottom: 10px;
+              border-radius: 4px;
+            }
+            .docs .img,
+            .images .img {
+              width: 120px;
+              height: 120px;
+              background-size: cover;
+              margin-right: 10px;
+              background-position: center;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              cursor: pointer;
+              position: relative;
+              overflow: hidden;
+            }
+            .images .img:nth-child(3n) {
+              margin-right: 0;
+            }
+            .docs .img span,
+            .images .img span {
+              display: none;
+              text-transform: capitalize;
+              z-index: 2;
+            }
+            .docs .img::after,
+            .images .img::after {
+              content: '';
+              width: 100%;
+              height: 100%;
+              transition: opacity .1s ease-in;
+              border-radius: 4px;
+              opacity: 0;
+              position: absolute;
+            }
+            .docs .img:hover::after,
+            .images .img:hover::after {
+              display: block;
+              background-color: #000;
+              opacity: .5;
+            }
+            .docs .img:hover span,
+            .images .img:hover span {
+              display: block;
+              color: #fff;
+            }
+            .docs .pic,
+            .images .pic {
+              background-color: #F5F7FA;
+              align-self: center;
+              text-align: center;
+              padding: 50px 0;
+              text-transform: uppercase;
+              color: #848EA1;
+              font-size: 12px;
+              cursor: pointer;
+              border: 1px dashed #000
+            }
+
+            @media screen and (max-width: 400px) {
+              .wrapper {
+                margin-top: 0;
+              }
+              header {
+                flex-direction: column;
+              }
+              .card-header span {
+                text-align: left;
+                margin-top: 10px;
+              }
+              .ways li,
+              section input,
+              section textarea,
+              .select-option .head,
+              .select-option .option div {
+               font-size: 8px;
+              }
+              .images .img,
+              .images .pic {
+                flex-basis: 100%;
+                margin-right: 0;
+              }
+            }
+
+            .wrapper footer ul {
+              margin: 0;
+              margin-top: 30px;
+              display: flex;
+              list-style: none;
+              padding: 0;
+            }
+            .wrapper footer ul li {
+              flex: 1;
+            }
+            .wrapper footer li span {
+              text-transform: capitalize;
+              cursor: pointer;
+            }
+            .wrapper footer li:first-child {
+              color: #999;
+              text-align: left;
+              font-size: 12px;
+            }
+            .wrapper footer li:first-child span {
+              display: inline-block;
+              border-bottom: 1px solid #ddd;
+            }
+            .wrapper footer li:last-child {
+              text-align: right;
+            }
+            .wrapper footer li:last-child span {
+              background-color: #22A4E6;
+              padding: 10px 20px;
+              color: #fff;
+              border-radius: 3px;
+            }
+
+            .notification {
+              position: absolute;
+              left: 20px;
+              bottom: 20px;
+              top: auto;
+              right: auto;
+            }
+
+            .notification p {
+              margin: 0;
+              padding: 0;
+            }
+            .notification .btn {
+              padding: 16px 20px;
+              border-radius: 5px;
+              display: flex;
+              margin-bottom: 10px;
+              font-size: 12px;
+              align-items: center;
+              animation: fadeIn .4s ease-in;
+            }
+            @keyframes fadeIn {
+              0% { opacity: 0; }
+              100% { opacity: 1; }
+            }
+            .notification .btn::before {
+              margin-right: 12px;
+              font-family: 'fontawesome';
+              font-size: 15px;
+            }
+            .notification span {
+              margin-left: 10px;
+              cursor: pointer;
+              flex: 1;
+              text-align: right;
+            }
+
+            .notification .error {
+              background-color: #ECC8C5;
+              border: 1px solid #BD8181;
+            }
+            .notification .error span {
+              color: #C79995;
+            }
+            .notification .error::before {
+              content: '\f05c';
+              color: #B2312F;
+
+            }
+            .notification .success {
+              background-color: #DEF2D6;
+              border: 1px solid #B3CEA9;
+            }
+            .notification .success span {
+              color: #AFC7A7;
+            }
+            .notification .success::before {
+              content: '\f00c';
+              color: #5A7052;
+            }
+
+            #upload-demo{
+                width: 250px;
+                height: 250px;
+                padding-bottom:25px;
+                margin: auto;
+            }
+
+            figure figcaption {
+                position: absolute;
+                bottom: 0;
+                color: #fff;
+                width: 100%;
+                padding-bottom: 20px;
+                text-shadow: 0 0 10px #000;
+            }
+        </style>
+
+        <style>
+            {% block style %}
+
+            {% endblock %}
+        </style>
+    </head>
+
+    <body>
+        {% include "_layouts/aside.html" %}
+        <!-- Right Panel -->
+        <div id="right-panel" class="right-panel">
+            {% include "_layouts/header.html" %}
+            {% block content %}{% endblock %}
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
+        <script src="/dashboard/static/dashboard/assets/js/main.js"></script>
+
+        <!--  Chart js -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.7.3/dist/Chart.bundle.min.js"></script>
+
+        <!--Chartist Chart-->
+        <script src="https://cdn.jsdelivr.net/npm/chartist@0.11.0/dist/chartist.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chartist-plugin-legend@0.6.2/chartist-plugin-legend.min.js"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/jquery.flot@0.8.3/jquery.flot.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/flot-pie@1.0.0/src/jquery.flot.pie.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/flot-spline@0.0.1/js/jquery.flot.spline.min.js"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/simpleweather@3.1.0/jquery.simpleWeather.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.13.4/jquery.mask.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+
+        <!--Local Stuff-->
+        <script>
+            jQuery(function($) {
+                $('.money').mask("# ##0.00", {reverse: true});
+
+                $('#bootstrap-data-table').DataTable();
+
+                $('.input-limit').unbind('keyup change input paste').bind('keyup change input paste',function(e){
+                    var $this = $(this);
+                    var val = $this.val();
+                    var valLength = val.length;
+                    var maxCount = $this.attr('maxlength');
+                    if(valLength>maxCount){
+                        $this.val($this.val().substring(0,maxCount));
+                    }
+                });
+            });
+        </script>
+        {% block js %}{% endblock %}
+        </body>
+</html>
